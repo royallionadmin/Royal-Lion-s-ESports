@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Member Profile</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#0d0d0d;
+color:#fff;
+padding:20px;
+
+}
+
+/* ===========================
+HEADER
+=========================== */
+
+.header{
+
+text-align:center;
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#ff2d2d;
+
+text-shadow:0 0 12px red;
+
+margin:20px 0;
+
+transition:.4s;
+
+}
+
+/* ===========================
+PLAYER CARD
+=========================== */
+
+.card{
+
+max-width:750px;
+
+margin:auto;
+
+background:#1b1b1b;
+
+border:2px solid #ff0000;
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:
+0 0 20px rgba(255,0,0,.35);
+
+transition:.4s;
+
+}
+
+/* ===========================
+PLAYER BANNER
+=========================== */
+
+.banner{
+
+padding:35px 20px;
+
+text-align:center;
+
+background:linear-gradient(135deg,#420000,#8b0000);
+
+border-bottom:2px solid rgba(255,255,255,.15);
+
+transition:.4s;
+
+}
+
+.rank-title{
+
+font-size:28px;
+
+font-weight:bold;
+
+margin-bottom:8px;
+
+}
+
+.guild-name{
+
+font-size:18px;
+
+color:#ddd;
+
+margin-bottom:20px;
+
+letter-spacing:2px;
+
+}
+
+.player-name{
+
+font-size:36px;
+
+font-weight:bold;
+
+margin-bottom:8px;
+
+}
+
+.player-ign{
+
+font-size:18px;
+
+color:#ddd;
+
+}
+
+/* ===========================
+STATS
+=========================== */
+
+.stats{
+
+display:flex;
+
+gap:15px;
+
+padding:20px;
+
+}
+
+.stat{
+
+flex:1;
+
+background:#262626;
+
+padding:18px;
+
+border-radius:15px;
+
+text-align:center;
+
+}
+
+.stat-number{
+
+font-size:28px;
+
+font-weight:bold;
+
+margin-bottom:5px;
+
+}
+
+.stat-label{
+
+font-size:14px;
+
+color:#999;
+
+}
+
+/* ===========================
+INFO
+=========================== */
+
+.info{
+
+padding:20px;
+
+}
+
+.info-box{
+
+background:#262626;
+
+padding:15px;
+
+border-radius:12px;
+
+margin-bottom:15px;
+
+}
+
+.label{
+
+font-size:13px;
+
+color:#999;
+
+margin-bottom:6px;
+
+}
+
+.value{
+
+font-size:18px;
+
+font-weight:bold;
+
+word-break:break-word;
+
+}/* ===========================
+THEMES
+=========================== */
+
+.leader .banner{
+
+background:linear-gradient(135deg,#8c6a00,#ffd700);
+
+}
+
+.leader .header{
+
+color:#ffd700;
+
+text-shadow:
+0 0 15px gold,
+0 0 35px gold;
+
+}
+
+.leader .card{
+
+border-color:#ffd700;
+
+box-shadow:
+0 0 25px gold,
+0 0 55px rgba(255,215,0,.4);
+
+}
+
+
+
+.coleader .banner{
+
+background:linear-gradient(135deg,#003b8f,#2aa7ff);
+
+}
+
+.coleader .header{
+
+color:#2aa7ff;
+
+text-shadow:0 0 20px #2aa7ff;
+
+}
+
+.coleader .card{
+
+border-color:#2aa7ff;
+
+box-shadow:0 0 25px #2aa7ff;
+
+}
+
+
+
+.elite .banner{
+
+background:linear-gradient(135deg,#47106b,#b44cff);
+
+}
+
+.elite .header{
+
+color:#b44cff;
+
+text-shadow:0 0 20px #b44cff;
+
+}
+
+.elite .card{
+
+border-color:#b44cff;
+
+box-shadow:0 0 25px #b44cff;
+
+}
+
+
+
+.veteran .banner{
+
+background:linear-gradient(135deg,#7b4300,#ff9800);
+
+}
+
+.veteran .header{
+
+color:#ff9800;
+
+text-shadow:0 0 20px #ff9800;
+
+}
+
+.veteran .card{
+
+border-color:#ff9800;
+
+box-shadow:0 0 25px #ff9800;
+
+}
+
+
+
+.core .banner{
+
+background:linear-gradient(135deg,#600019,#dc143c);
+
+}
+
+.core .header{
+
+color:#dc143c;
+
+text-shadow:0 0 20px #dc143c;
+
+}
+
+.core .card{
+
+border-color:#dc143c;
+
+box-shadow:0 0 25px #dc143c;
+
+}
+
+
+
+.member .banner{
+
+background:linear-gradient(135deg,#4d4d4d,#c0c0c0);
+
+}
+
+.member .header{
+
+color:#c0c0c0;
+
+text-shadow:0 0 20px silver;
+
+}
+
+.member .card{
+
+border-color:silver;
+
+box-shadow:0 0 25px silver;
+
+}
+
+
+
+.recruit .banner{
+
+background:linear-gradient(135deg,#0f5c22,#39d56c);
+
+}
+
+.recruit .header{
+
+color:#39d56c;
+
+text-shadow:0 0 20px #39d56c;
+
+}
+
+.recruit .card{
+
+border-color:#39d56c;
+
+box-shadow:0 0 25px #39d56c;
+
+}
+
+
+
+.back{
+
+display:block;
+
+max-width:300px;
+
+margin:25px auto 0;
+
+padding:15px;
+
+text-align:center;
+
+background:#ff0000;
+
+color:white;
+
+text-decoration:none;
+
+font-weight:bold;
+
+border-radius:10px;
+
+transition:.3s;
+
+}
+
+.back:hover{
+
+background:#c40000;
+
+}
+
+
+
+@media(max-width:700px){
+
+.stats{
+
+flex-direction:column;
+
+}
+
+.player-name{
+
+font-size:28px;
+
+}
+
+.header{
+
+font-size:26px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header" id="profileHeader">
+
+👤 Member Profile
+
+</div>
+
+<div class="card" id="profileCard">
+
+<div class="banner" id="profileBanner">
+
+<div class="rank-title" id="rankTitle">
+
+Loading...
+
+</div>
+
+<div class="guild-name">
+
+🦁 ROYAL LION'S ESPORTS
+
+</div>
+
+<div class="player-name" id="name">
+
+Loading...
+
+</div>
+
+<div class="player-ign" id="ign">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-number" id="glory">
+
+0
+
+</div>
+
+<div class="stat-label">
+
+🏆 Glory
+
+</div>
+
+</div>
+
+<div class="stat">
+
+<div class="stat-number" id="guildWarPoints">
+
+0
+
+</div>
+
+<div class="stat-label">
+
+⚔️ Guild War Points
+
+</div>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<div class="info-box">
+
+<div class="label">
+
+Free Fire UID
+
+</div>
+
+<div class="value" id="ffUid"></div>
+
+</div>
+
+<div class="info-box">
+
+<div class="label">
+
+Team
+
+</div>
+
+<div class="value" id="team"></div>
+
+</div>
+
+<div class="info-box">
+
+<div class="label">
+
+Facebook
+
+</div>
+
+<div class="value" id="facebook"></div>
+
+</div>
+
+<div class="info-box">
+
+<div class="label">
+
+Status
+
+</div>
+
+<div class="value" id="status"></div>
+
+</div>
+
+<div class="info-box">
+
+<div class="label">
+
+Joined
+
+</div>
+
+<div class="value" id="joinDate"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<a href="guild-members.html" class="back">
+
+⬅ Back to Guild Members
+
+</a>
+
+<script type="module" src="member.js"></script>
+
+</body>
+
+</html>

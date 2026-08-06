@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0d0d0d;
+color:#fff;
+padding:20px;
+}
+
+.header{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#ff2d2d;
+text-shadow:0 0 12px red;
+margin:25px 0;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+background:#1b1b1b;
+border:2px solid #ff0000;
+border-radius:20px;
+padding:25px;
+box-shadow:0 0 20px rgba(255,0,0,.35);
+}
+
+.btn{
+display:block;
+width:100%;
+padding:16px;
+margin-bottom:18px;
+text-align:center;
+text-decoration:none;
+background:#ff0000;
+color:white;
+font-size:18px;
+font-weight:bold;
+border-radius:10px;
+transition:.3s;
+}
+
+.btn:hover{
+background:#b80000;
+}
+
+.footer{
+margin-top:20px;
+text-align:center;
+color:#777;
+font-size:13px;
+}
+
+@media(max-width:500px){
+
+.header{
+font-size:25px;
+}
+
+.container{
+padding:18px;
+}
+
+.btn{
+font-size:16px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+🛡️ Admin Panel
+</div>
+
+<div class="container">
+
+<a href="pending-members.html" class="btn">
+👤 Pending Members
+</a>
+
+<a href="manage-members.html" class="btn">
+⚙️ Manage Members
+</a>
+
+<a href="guild-members.html" class="btn">
+👥 View Guild Members
+</a>
+<a href="admin-notices.html" class="btn">
+📢 Manage Notices
+</a>
+<a href="dashboard.html" class="btn">
+⬅️ Back to Dashboard
+</a>
+
+<div class="footer">
+Royal Lion's Esports Admin
+</div>
+
+</div>
+
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>

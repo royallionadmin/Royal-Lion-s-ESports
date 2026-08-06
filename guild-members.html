@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Guild Members</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0d0d0d;
+color:white;
+padding:20px;
+}
+
+.header{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#ff2d2d;
+text-shadow:0 0 12px red;
+margin:25px 0;
+}
+
+.search-box{
+max-width:1000px;
+margin:0 auto 20px;
+}
+
+.search-box input{
+width:100%;
+padding:14px;
+background:#1b1b1b;
+color:white;
+border:2px solid #ff0000;
+border-radius:10px;
+font-size:16px;
+outline:none;
+}
+
+.search-box input::placeholder{
+color:#888;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.table-container{
+overflow-x:auto;
+border-radius:15px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#1b1b1b;
+overflow:hidden;
+}
+
+thead{
+background:#ff0000;
+}
+
+th{
+padding:15px;
+font-size:16px;
+}
+
+td{
+padding:14px;
+border-bottom:1px solid #333;
+text-align:center;
+}
+
+tbody tr:hover{
+background:#262626;
+}
+
+.viewBtn{
+background:#ff0000;
+border:none;
+color:white;
+padding:8px 14px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+transition:.3s;
+}
+
+.viewBtn:hover{
+background:#c40000;
+}
+
+.back{
+display:block;
+margin:25px auto 0;
+max-width:300px;
+padding:15px;
+background:#ff0000;
+color:white;
+text-align:center;
+text-decoration:none;
+font-weight:bold;
+border-radius:10px;
+transition:.3s;
+}
+
+.back:hover{
+background:#c40000;
+}
+
+.empty{
+padding:30px;
+color:#999;
+text-align:center;
+}
+
+@media(max-width:700px){
+
+.header{
+font-size:24px;
+}
+
+table{
+font-size:14px;
+}
+
+th,
+td{
+padding:10px 8px;
+}
+
+.search-box input{
+font-size:15px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+👥 Guild Members
+</div>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔍 Search by Name or IGN">
+
+</div>
+
+<div class="container">
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>👑 Rank</th>
+<th>👤 Name</th>
+<th>🎮 IGN</th>
+<th>🛡️ Team</th>
+<th>🏆 Glory</th>
+<th>⚔️ GW Points</th>
+<th>👁️ View</th>
+
+</tr>
+
+</thead>
+
+<tbody id="membersBody">
+
+<tr>
+
+<td colspan="7" class="empty">
+Loading members...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<a href="dashboard.html" class="back">
+⬅️ Back to Dashboard
+</a>
+
+<script type="module" src="guild-members.js"></script>
+
+</body>
+
+</html>
