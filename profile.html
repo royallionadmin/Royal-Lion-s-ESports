@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0d0d0d;
+color:#fff;
+padding:20px;
+}
+
+.header{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#ff2d2d;
+text-shadow:0 0 12px red;
+margin:25px 0;
+}
+
+.card{
+max-width:500px;
+margin:auto;
+background:#1b1b1b;
+border:2px solid #ff0000;
+border-radius:20px;
+padding:25px;
+box-shadow:0 0 20px rgba(255,0,0,.35);
+}
+
+.info{
+margin-bottom:15px;
+padding:12px;
+background:#252525;
+border-radius:10px;
+}
+
+.label{
+font-size:13px;
+color:#999;
+margin-bottom:5px;
+}
+
+.value{
+font-size:17px;
+font-weight:bold;
+word-break:break-word;
+}
+
+.buttons{
+margin-top:25px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.btn{
+display:block;
+text-align:center;
+text-decoration:none;
+padding:15px;
+background:#ff0000;
+color:white;
+font-weight:bold;
+border-radius:10px;
+transition:.3s;
+}
+
+.btn:hover{
+background:#b80000;
+}
+
+@media(max-width:500px){
+
+.header{
+font-size:25px;
+}
+
+.card{
+padding:18px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+🦁 My Profile
+</div>
+
+<div class="card">
+
+<div class="info">
+<div class="label">Full Name</div>
+<div class="value" id="fullName">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">IGN</div>
+<div class="value" id="ign">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Free Fire UID</div>
+<div class="value" id="ffUid">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">WhatsApp Number</div>
+<div class="value" id="phone">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Gmail</div>
+<div class="value" id="email">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Facebook</div>
+<div class="value" id="facebook">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Team</div>
+<div class="value" id="team">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Glory</div>
+<div class="value" id="glory">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Guild War Points</div>
+<div class="value" id="guildWarPoints">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Join Date</div>
+<div class="value" id="joinDate">Loading...</div>
+</div>
+
+<div class="info">
+<div class="label">Status</div>
+<div class="value" id="status">Loading...</div>
+</div>
+
+<div class="buttons">
+
+<a href="edit-profile.html" class="btn">
+✏️ Edit Profile
+</a>
+
+<a href="dashboard.html" class="btn">
+⬅️ Back to Dashboard
+</a>
+
+</div>
+
+</div>
+
+<script type="module" src="profile.js"></script>
+
+</body>
+</html>
