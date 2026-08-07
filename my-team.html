@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Team</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0d0d0d;
+color:#fff;
+padding:20px;
+}
+
+.header{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#ff2d2d;
+text-shadow:0 0 12px red;
+margin:25px 0;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.teamCard{
+background:#1b1b1b;
+border:2px solid #ff0000;
+border-radius:18px;
+padding:20px;
+margin-bottom:25px;
+box-shadow:0 0 15px rgba(255,0,0,.35);
+text-align:center;
+}
+
+.teamName{
+font-size:28px;
+font-weight:bold;
+color:#ff2d2d;
+margin-bottom:10px;
+}
+
+.teamCount{
+font-size:16px;
+color:#bbb;
+}
+
+.member{
+background:#1b1b1b;
+border:2px solid #ff0000;
+border-radius:15px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 0 12px rgba(255,0,0,.25);
+}
+
+.memberName{
+font-size:22px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.info{
+margin:6px 0;
+color:#ddd;
+}
+
+.empty{
+text-align:center;
+color:#888;
+font-size:18px;
+margin-top:40px;
+}
+.back{
+display:block;
+margin-top:25px;
+padding:15px;
+text-align:center;
+background:#ff0000;
+border-radius:10px;
+text-decoration:none;
+color:white;
+font-weight:bold;
+transition:.3s;
+}
+
+.back:hover{
+background:#c40000;
+}
+
+@media(max-width:500px){
+
+.header{
+font-size:25px;
+}
+
+.teamName{
+font-size:24px;
+}
+
+.member{
+padding:15px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+👥 My Team
+
+</div>
+
+<div class="container">
+
+<div
+id="teamContainer">
+
+<div class="empty">
+
+Loading team...
+
+</div>
+
+</div>
+
+</div>
+
+<a
+href="dashboard.html"
+class="back">
+
+⬅️ Back to Dashboard
+
+</a>
+
+<script
+type="module"
+src="my-team.js"></script>
+
+</body>
+
+</html>
