@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Manage Members</title>
 
 <style>
@@ -30,8 +35,27 @@ margin:25px 0;
 }
 
 .container{
-max-width:700px;
+max-width:750px;
 margin:auto;
+}
+
+.searchBox{
+margin-bottom:25px;
+}
+
+.searchBox input{
+width:100%;
+padding:14px;
+background:#1b1b1b;
+border:2px solid #ff0000;
+border-radius:10px;
+color:#fff;
+font-size:16px;
+outline:none;
+}
+
+.searchBox input::placeholder{
+color:#888;
 }
 
 .member{
@@ -46,6 +70,12 @@ box-shadow:0 0 15px rgba(255,0,0,.3);
 .member h3{
 margin-bottom:15px;
 color:#fff;
+}
+
+.member small{
+display:block;
+color:#999;
+margin-bottom:15px;
 }
 
 label{
@@ -71,9 +101,7 @@ outline:none;
 input:focus,
 select:focus{
 border-color:#ff0000;
-}
-
-.save{
+}.save{
 margin-top:20px;
 width:100%;
 padding:14px;
@@ -125,6 +153,11 @@ font-size:25px;
 padding:15px;
 }
 
+.searchBox input{
+font-size:15px;
+padding:12px;
+}
+
 .save,
 .back{
 font-size:15px;
@@ -142,7 +175,18 @@ font-size:15px;
 👥 Manage Members
 </div>
 
-<div class="container" id="membersContainer">
+<div class="container">
+
+<div class="searchBox">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔍 Search by Name, UID, Email or Team">
+
+</div>
+
+<div id="membersContainer">
 
 <div class="empty">
 Loading members...
@@ -150,11 +194,19 @@ Loading members...
 
 </div>
 
-<a href="admin.html" class="back">
+</div>
+
+<a
+href="admin.html"
+class="back">
+
 ⬅️ Back to Admin Panel
+
 </a>
 
-<script type="module" src="manage-members.js"></script>
+<script
+type="module"
+src="manage-members.js"></script>
 
 </body>
 </html>
