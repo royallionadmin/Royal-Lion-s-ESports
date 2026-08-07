@@ -23,18 +23,16 @@ const pinned = document.getElementById("pinned");
 const popup = document.getElementById("popup");
 
 const publishBtn = document.getElementById("publishBtn");
-
 const noticeList = document.getElementById("noticeList");
 
 let editingId = null;
-
 let currentAdmin = null;
 
-onAuthStateChanged(auth, async (user)=>{
+onAuthStateChanged(auth, async(user)=>{
 
     if(!user){
 
-        location.href="index.html";
+        location.href = "index.html";
 
         return;
 
@@ -46,7 +44,7 @@ onAuthStateChanged(auth, async (user)=>{
 
     if(!userSnap.exists()){
 
-        location.href="dashboard.html";
+        location.href = "dashboard.html";
 
         return;
 
@@ -54,9 +52,9 @@ onAuthStateChanged(auth, async (user)=>{
 
     const data = userSnap.data();
 
-    if(data.role!=="admin"){
+    if(data.role !== "admin"){
 
-        location.href="dashboard.html";
+        location.href = "dashboard.html";
 
         return;
 
@@ -67,12 +65,14 @@ onAuthStateChanged(auth, async (user)=>{
     loadNotices();
 
 });
-publishBtn.addEventListener("click", async () => {
+
+publishBtn.addEventListener("click", async()=>{
 
     const noticeTitle = title.value.trim();
+
     const noticeMessage = message.value.trim();
 
-    if (!noticeTitle || !noticeMessage) {
+    if(!noticeTitle || !noticeMessage){
 
         alert("Please fill in the title and message.");
 
@@ -84,11 +84,13 @@ publishBtn.addEventListener("click", async () => {
 
     publishBtn.textContent = editingId ?
 
-        "Updating..." :
+        "Updating..."
+
+        :
 
         "Publishing...";
 
-    try {
+    try{
 
         const noticeData = {
 
@@ -107,12 +109,11 @@ publishBtn.addEventListener("click", async () => {
             updatedAt: serverTimestamp()
 
         };
-
-        if (editingId) {
+                if(editingId){
 
             await updateDoc(
 
-                doc(db, "notices", editingId),
+                doc(db,"notices",editingId),
 
                 noticeData
 
@@ -120,13 +121,15 @@ publishBtn.addEventListener("click", async () => {
 
             alert("Notice updated successfully.");
 
-        } else {
+        }
+
+        else{
 
             noticeData.createdAt = serverTimestamp();
 
             await addDoc(
 
-                collection(db, "notices"),
+                collection(db,"notices"),
 
                 noticeData
 
@@ -140,7 +143,9 @@ publishBtn.addEventListener("click", async () => {
 
         loadNotices();
 
-    } catch (error) {
+    }
+
+    catch(error){
 
         console.error(error);
 
@@ -154,7 +159,7 @@ publishBtn.addEventListener("click", async () => {
 
 });
 
-function clearForm() {
+function clearForm(){
 
     editingId = null;
 
@@ -168,132 +173,116 @@ function clearForm() {
 
     popup.checked = false;
 
-}async function loadNotices() {
+}
 
-    noticeList.innerHTML = `
-        <div class="empty">
-            Loading notices...
-        </div>
-    `;
+async function loadNotices(){
 
-    try {
+    noticeList.innerHTML = `<div class="empty">Loading notices...</div>`;
 
-        const snapshot = await getDocs(collection(db, "notices"));
+    try{
 
-        let notices = [];
+        const snapshot = await getDocs(
 
-        snapshot.forEach(docSnap => {
+            collection(db,"notices")
+
+        );
+
+        const notices = [];
+
+        snapshot.forEach(docSnap=>{
 
             notices.push({
+
                 id: docSnap.id,
+
                 ...docSnap.data()
+
             });
 
         });
 
-        notices.sort((a, b) => {
+        notices.sort((a,b)=>{
 
-            if ((a.pinned || false) !== (b.pinned || false)) {
+            if((a.pinned||false)!==(b.pinned||false)){
 
-                return (b.pinned || false) - (a.pinned || false);
+                return (b.pinned||false)-(a.pinned||false);
 
             }
 
             const timeA = a.createdAt?.seconds || 0;
+
             const timeB = b.createdAt?.seconds || 0;
 
             return timeB - timeA;
 
         });
 
-        if (notices.length === 0) {
+        if(notices.length===0){
 
-            noticeList.innerHTML = `
-                <div class="empty">
-                    No notices published yet.
-                </div>
-            `;
+            noticeList.innerHTML = `<div class="empty">No notices published yet.</div>`;
 
             return;
 
         }
 
         noticeList.innerHTML = "";
-
-        notices.forEach(notice => {
+                notices.forEach(notice=>{
 
             const created = notice.createdAt
+
                 ? notice.createdAt.toDate().toLocaleString()
+
                 : "-";
 
             noticeList.innerHTML += `
+<div class="noticeCard">
+<div class="noticeTitle">${getTypeEmoji(notice.type)} ${notice.title}</div>
 
-            <div class="noticeCard">
+<div class="noticeType">${notice.type}</div>
 
-                <div class="noticeTitle">
+<div class="noticeMessage">${notice.message}</div>
 
-                    ${getTypeEmoji(notice.type)}
-                    ${notice.title}
+<div class="noticeInfo">
+<span>📅 ${created}</span>
+${notice.pinned ? "<span>📌 Pinned</span>" : ""}
+${notice.popup ? "<span>📢 Popup</span>" : ""}
+</div>
 
-                </div>
+<div class="actions">
 
-                <div class="noticeType">
+<button
+class="editBtn"
+onclick="editNotice('${notice.id}')">
 
-                    ${notice.type}
+✏️ Edit
 
-                </div>
+</button>
 
-                <div class="noticeMessage">
+<button
+class="deleteBtn"
+onclick="deleteNotice('${notice.id}')">
 
-                    ${notice.message}
+🗑️ Delete
 
-                </div>
+</button>
 
-                <div class="noticeInfo">
+</div>
 
-                    <span>📅 ${created}</span>
-
-                    <span>${notice.pinned ? "📌 Pinned" : ""}</span>
-
-                    <span>${notice.popup ? "📢 Popup" : ""}</span>
-
-                </div>
-
-                <div class="actions">
-
-                    <button
-                        class="editBtn"
-                        onclick="editNotice('${notice.id}')">
-
-                        ✏️ Edit
-
-                    </button>
-
-                    <button
-                        class="deleteBtn"
-                        onclick="deleteNotice('${notice.id}')">
-
-                        🗑️ Delete
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            `;
+</div>`;
 
         });
 
-    } catch (error) {
+    }
+
+    catch(error){
 
         console.error(error);
 
         noticeList.innerHTML = `
-            <div class="empty">
-                Failed to load notices.
-            </div>
-        `;
+<div class="empty">
+Failed to load notices.
+</div>
+`;
 
     }
 
