@@ -14,20 +14,14 @@ loadNotices();
 
 async function loadNotices(){
 
-    noticeList.innerHTML = `
-
-        <div class="empty">
-
-            Loading notices...
-
-        </div>
-
-    `;
+    noticeList.innerHTML = `<div class="empty">Loading notices...</div>`;
 
     try{
 
         const snapshot = await getDocs(
+
             collection(db,"notices")
+
         );
 
         allNotices = [];
@@ -68,35 +62,18 @@ async function loadNotices(){
 
         console.error(error);
 
-        noticeList.innerHTML = `
-
-            <div class="empty">
-
-                Failed to load notices.
-
-            </div>
-
-        `;
+        noticeList.innerHTML = `<div class="empty">Failed to load notices.</div>`;
 
     }
 
 }
-
 function renderNotices(list){
 
-    noticeList.innerHTML="";
+    noticeList.innerHTML = "";
 
     if(list.length===0){
 
-        noticeList.innerHTML=`
-
-        <div class="empty">
-
-            No notices available.
-
-        </div>
-
-        `;
+        noticeList.innerHTML = `<div class="empty">No notices available.</div>`;
 
         return;
 
@@ -106,84 +83,66 @@ function renderNotices(list){
 
         const date = notice.createdAt
 
-        ? notice.createdAt.toDate().toLocaleDateString()
+            ? notice.createdAt.toDate().toLocaleDateString()
 
-        : "-";
+            : "-";
 
         noticeList.innerHTML += `
-                <div class="notice">
+<div class="notice">
 
-            <div class="notice-header">
+<div class="notice-header">
 
-                <div class="type ${getTypeClass(notice.type)}">
+<div class="type ${getTypeClass(notice.type)}">${getTypeEmoji(notice.type)} ${notice.type || "Announcement"}</div>
 
-                    ${getTypeEmoji(notice.type)}
-                    ${notice.type || "Announcement"}
+${notice.pinned ? '<div class="pin">📌 Pinned</div>' : ''}
 
-                </div>
+</div>
 
-                ${notice.pinned ? '<div class="pin">📌 Pinned</div>' : ''}
+<div class="title">${notice.title || "Untitled"}</div>
 
-            </div>
+<div class="message">${notice.message || ""}</div>
 
-            <div class="title">
+<div class="footer">
 
-                ${notice.title || "Untitled"}
+<div>📅 ${date}</div>
 
-            </div>
+<div>${notice.createdBy || "Admin"}</div>
 
-            <div class="message">
+</div>
 
-                ${notice.message || ""}
-
-            </div>
-
-            <div class="footer">
-
-                <div>
-
-                    📅 ${date}
-
-                </div>
-
-                <div>
-
-                    ${notice.createdBy || "Admin"}
-
-                </div>
-
-            </div>
-
-        </div>
-
-        `;
-
+</div>`;
     });
 
-}
-
-searchInput.addEventListener("input",()=>{
+}searchInput.addEventListener("input",()=>{
 
     const text = searchInput.value
+
         .toLowerCase()
+
         .trim();
 
     const filtered = allNotices.filter(notice=>
 
         (notice.title || "")
+
             .toLowerCase()
+
             .includes(text)
 
         ||
 
         (notice.message || "")
+
             .toLowerCase()
+
             .includes(text)
 
         ||
 
         (notice.type || "")
+
             .toLowerCase()
+
             .includes(text)
 
     );
@@ -197,41 +156,50 @@ function getTypeClass(type){
     switch(type){
 
         case "Tournament":
+
             return "tournament";
 
         case "Event":
+
             return "event";
 
         case "Maintenance":
+
             return "maintenance";
 
         case "Emergency":
+
             return "emergency";
 
         default:
+
             return "announcement";
 
     }
 
 }
-
 function getTypeEmoji(type){
 
     switch(type){
 
         case "Tournament":
+
             return "🏆";
 
         case "Event":
+
             return "🎉";
 
         case "Maintenance":
+
             return "⚠️";
 
         case "Emergency":
+
             return "🚨";
 
         default:
+
             return "📢";
 
     }
