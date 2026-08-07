@@ -15,142 +15,262 @@ updateDoc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const container = document.getElementById("membersContainer");
+const searchInput = document.getElementById("searchInput");
 
-onAuthStateChanged(auth, async (user) => {
+let allMembers = [];
 
-    if (!user) {
-        location.href = "index.html";
+onAuthStateChanged(auth, async(user)=>{
+
+    if(!user){
+
+        location.href="index.html";
+
         return;
+
     }
 
-    try {
+    try{
 
-        const adminRef = doc(db, "users", user.uid);
+        const adminRef = doc(db,"users",user.uid);
+
         const adminSnap = await getDoc(adminRef);
 
-        if (!adminSnap.exists() || adminSnap.data().role !== "admin") {
+        if(!adminSnap.exists() || adminSnap.data().role !== "admin"){
+
             alert("Admins only.");
-            location.href = "dashboard.html";
+
+            location.href="dashboard.html";
+
             return;
+
         }
 
         loadMembers();
 
-    } catch (error) {
+    }
+
+    catch(error){
 
         console.error(error);
+
         alert("Failed to verify admin.");
-        location.href = "dashboard.html";
+
+        location.href="dashboard.html";
 
     }
 
 });
 
-async function loadMembers() {
+async function loadMembers(){
 
-    container.innerHTML = "";
+    container.innerHTML = `
+<div class="empty">
+Loading members...
+</div>
+`;
 
     const q = query(
-        collection(db, "users"),
-        where("status", "==", "Active")
+
+        collection(db,"users"),
+
+        where("status","==","Active")
+
     );
 
     const snapshot = await getDocs(q);
 
-    if (snapshot.empty) {
+    allMembers = [];
+
+    snapshot.forEach(member=>{
+
+        allMembers.push({
+
+            id:member.id,
+
+            ...member.data()
+
+        });
+
+    });
+        allMembers.sort((a,b)=>{
+
+        const teamA = (a.team || "").trim();
+
+        const teamB = (b.team || "").trim();
+
+        if(teamA === "" && teamB !== "") return -1;
+
+        if(teamA !== "" && teamB === "") return 1;
+
+        if(teamA.toLowerCase() !== teamB.toLowerCase()){
+
+            return teamA.localeCompare(teamB);
+
+        }
+
+        return (a.name || "").localeCompare(b.name || "");
+
+    });
+
+    renderMembers(allMembers);
+
+}
+
+function renderMembers(list){
+
+    container.innerHTML = "";
+
+    if(list.length === 0){
 
         container.innerHTML = `
-            <div class="empty">
-                No active members found.
-            </div>
-        `;
+<div class="empty">
+No active members found.
+</div>
+`;
 
         return;
+
     }
 
-    snapshot.forEach((member) => {
-
-        const data = member.data();
+    list.forEach(member=>{
 
         const card = document.createElement("div");
+
         card.className = "member";
 
         card.innerHTML = `
 
-            <h3>${data.name || "-"}</h3>
+<h3>${member.name || "-"}</h3>
 
-            <label>Team</label>
-            <input class="team" value="${data.team || ""}">
+<small>
 
-            <label>Guild Rank</label>
-            <select class="guildRank">
+📧 ${member.email || "-"}
 
-                <option value="Leader" ${data.guildRank=="Leader"?"selected":""}>👑 Leader</option>
+</small>
 
-                <option value="Co-Leader" ${data.guildRank=="Co-Leader"?"selected":""}>🛡️ Co-Leader</option>
+<label>Team</label>
 
-                <option value="Elite" ${data.guildRank=="Elite"?"selected":""}>⭐ Elite</option>
+<input
+class="team"
+value="${member.team || ""}"
+placeholder="Enter team name">
 
-                <option value="Veteran" ${data.guildRank=="Veteran"?"selected":""}>🎖️ Veteran</option>
+<label>Guild Rank</label>
 
-                <option value="Core Member" ${data.guildRank=="Core Member"?"selected":""}>⚔️ Core Member</option>
+<select class="guildRank">
+<option value="Leader" ${member.guildRank=="Leader"?"selected":""}>
+👑 Leader
+</option>
 
-                <option value="Member" ${data.guildRank=="Member"?"selected":""}>👤 Member</option>
+<option value="Co-Leader" ${member.guildRank=="Co-Leader"?"selected":""}>
+🛡️ Co-Leader
+</option>
 
-                <option value="Recruit" ${data.guildRank=="Recruit"?"selected":""}>🌱 Recruit</option>
+<option value="Elite" ${member.guildRank=="Elite"?"selected":""}>
+⭐ Elite
+</option>
 
-            </select>
+<option value="Veteran" ${member.guildRank=="Veteran"?"selected":""}>
+🎖️ Veteran
+</option>
 
-            <label>Glory</label>
-            <input class="glory" type="number" value="${data.glory ?? 0}">
+<option value="Core Member" ${member.guildRank=="Core Member"?"selected":""}>
+⚔️ Core Member
+</option>
 
-            <label>Guild War Points</label>
-            <input class="points" type="number" value="${data.guildWarPoints ?? 0}">
+<option value="Member" ${member.guildRank=="Member"?"selected":""}>
+👤 Member
+</option>
 
-            <label>Status</label>
+<option value="Recruit" ${member.guildRank=="Recruit"?"selected":""}>
+🌱 Recruit
+</option>
 
-            <select class="status">
+</select>
 
-                <option value="Active" ${data.status=="Active"?"selected":""}>Active</option>
+<label>Glory</label>
 
-                <option value="Pending" ${data.status=="Pending"?"selected":""}>Pending</option>
+<input
+class="glory"
+type="number"
+value="${member.glory ?? 0}">
 
-                <option value="Suspended" ${data.status=="Suspended"?"selected":""}>Suspended</option>
+<label>Guild War Points</label>
 
-            </select>
+<input
+class="points"
+type="number"
+value="${member.guildWarPoints ?? 0}">
 
-            <button class="save">
-                💾 Save Changes
-            </button>
+<label>Status</label>
 
-        `;
+<select class="status">
 
+<option value="Active" ${member.status=="Active"?"selected":""}>
+Active
+</option>
+
+<option value="Pending" ${member.status=="Pending"?"selected":""}>
+Pending
+</option>
+
+<option value="Suspended" ${member.status=="Suspended"?"selected":""}>
+Suspended
+</option>
+
+</select>
+
+<button
+class="save">
+
+💾 Save Changes
+
+</button>
+
+`;
         const saveBtn = card.querySelector(".save");
 
-        saveBtn.onclick = async () => {
+        saveBtn.onclick = async()=>{
 
             saveBtn.disabled = true;
+
             saveBtn.textContent = "Saving...";
 
-            try {
+            try{
 
-                await updateDoc(doc(db, "users", member.id), {
+                await updateDoc(
 
-                    team: card.querySelector(".team").value.trim(),
+                    doc(db,"users",member.id),
 
-                    guildRank: card.querySelector(".guildRank").value,
+                    {
 
-                    glory: Number(card.querySelector(".glory").value),
+                        team: card.querySelector(".team").value.trim(),
 
-                    guildWarPoints: Number(card.querySelector(".points").value),
+                        guildRank: card.querySelector(".guildRank").value,
 
-                    status: card.querySelector(".status").value
+                        glory: Number(
 
-                });
+                            card.querySelector(".glory").value
+
+                        ),
+
+                        guildWarPoints: Number(
+
+                            card.querySelector(".points").value
+
+                        ),
+
+                        status: card.querySelector(".status").value
+
+                    }
+
+                );
 
                 saveBtn.textContent = "✅ Saved";
 
-            } catch (error) {
+            }
+
+            catch(error){
 
                 console.error(error);
 
@@ -158,12 +278,13 @@ async function loadMembers() {
 
             }
 
-            setTimeout(() => {
+            setTimeout(()=>{
 
                 saveBtn.disabled = false;
+
                 saveBtn.textContent = "💾 Save Changes";
 
-            }, 1500);
+            },1500);
 
         };
 
@@ -172,3 +293,39 @@ async function loadMembers() {
     });
 
 }
+
+searchInput.addEventListener("input",()=>{
+
+    const text = searchInput.value
+        .toLowerCase()
+        .trim();
+
+    const filtered = allMembers.filter(member=>
+
+        (member.name || "")
+        .toLowerCase()
+        .includes(text)
+
+        ||
+
+        (member.email || "")
+        .toLowerCase()
+        .includes(text)
+
+        ||
+
+        (member.uid || "")
+        .toLowerCase()
+        .includes(text)
+
+        ||
+
+        (member.team || "")
+        .toLowerCase()
+        .includes(text)
+
+    );
+
+    renderMembers(filtered);
+
+});
