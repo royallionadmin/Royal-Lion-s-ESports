@@ -9,57 +9,52 @@ getDocs
 
 loadPopup();
 
-async function loadPopup(){
+async function loadPopup() {
 
-    try{
+    try {
 
         const q = query(
-
-            collection(db,"notices"),
-
-            where("popup","==",true)
-
+            collection(db, "notices"),
+            where("popup", "==", true)
         );
 
         const snapshot = await getDocs(q);
 
-        if(snapshot.empty){
-
+        if (snapshot.empty) {
             return;
-
         }
 
         let notices = [];
 
-        snapshot.forEach(doc=>{
+        snapshot.forEach(doc => {
 
             notices.push({
-
-                id:doc.id,
-
+                id: doc.id,
                 ...doc.data()
-
             });
 
         });
 
-        notices.sort((a,b)=>{
+        notices.sort((a, b) => {
 
             const timeA = a.createdAt?.seconds || 0;
-
             const timeB = b.createdAt?.seconds || 0;
 
-            return timeB-timeA;
+            return timeB - timeA;
 
         });
 
         const notice = notices[0];
 
+        const lastSeenPopup = localStorage.getItem("lastSeenPopup");
+
+        if (lastSeenPopup === notice.id) {
+            return;
+        }
+
         showPopup(notice);
 
-    }
-
-    catch(error){
+    } catch (error) {
 
         console.error(error);
 
@@ -67,15 +62,15 @@ async function loadPopup(){
 
 }
 
-function showPopup(notice){
+function showPopup(notice) {
 
     const overlay = document.createElement("div");
 
-    overlay.id="popupOverlay";
+    overlay.id = "popupOverlay";
 
     overlay.innerHTML = `
-    
-         <div id="popupBox">
+
+        <div id="popupBox">
 
             <h2>
 
@@ -158,6 +153,28 @@ function showPopup(notice){
 
         box-shadow:0 0 20px rgba(255,0,0,.4);
 
+        animation:popup .25s ease;
+
+    }
+
+    @keyframes popup{
+
+        from{
+
+            transform:scale(.8);
+
+            opacity:0;
+
+        }
+
+        to{
+
+            transform:scale(1);
+
+            opacity:1;
+
+        }
+
     }
 
     #popupBox h2{
@@ -220,7 +237,15 @@ function showPopup(notice){
 
     document.getElementById("closePopup")
 
-    .addEventListener("click",()=>{
+    .addEventListener("click", () => {
+
+        localStorage.setItem(
+
+            "lastSeenPopup",
+
+            notice.id
+
+        );
 
         overlay.remove();
 
@@ -230,9 +255,9 @@ function showPopup(notice){
 
 }
 
-function getTypeEmoji(type){
+function getTypeEmoji(type) {
 
-    switch(type){
+    switch (type) {
 
         case "Tournament":
             return "🏆";
