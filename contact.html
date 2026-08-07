@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact Us</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0d0d0d;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+background:red;
+filter:blur(180px);
+opacity:.18;
+border-radius:50%;
+z-index:-1;
+}
+
+.container{
+width:90%;
+max-width:400px;
+background:#1b1b1b;
+border:2px solid #ff0000;
+border-radius:18px;
+padding:35px 25px;
+text-align:center;
+box-shadow:0 0 25px rgba(255,0,0,.45);
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+color:#ff2d2d;
+text-shadow:0 0 12px red;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#ccc;
+margin-bottom:30px;
+}
+
+.contact-btn{
+display:block;
+width:100%;
+padding:15px;
+margin-bottom:18px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+font-size:18px;
+font-weight:bold;
+transition:.3s;
+}
+
+.facebook{
+background:#1877f2;
+}
+
+.whatsapp{
+background:#25d366;
+}
+
+.telegram{
+background:#0088cc;
+}
+
+.contact-btn:hover{
+transform:scale(1.03);
+opacity:.85;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+Contact Us
+</div>
+
+<div class="subtitle">
+Get in touch with us
+</div>
+
+
+<a class="contact-btn facebook"
+href="https://www.facebook.com/mdarmanmia280"
+target="_blank">
+📘 Facebook
+</a>
+
+
+<a class="contact-btn whatsapp"
+href="https://wa.me/8801617734280"
+target="_blank">
+💬 WhatsApp
+</a>
+
+
+<a class="contact-btn telegram"
+href="https://t.me/1234"
+target="_blank">
+✈️ Telegram
+</a>
+
+
+</div>
+
+</body>
+</html>
